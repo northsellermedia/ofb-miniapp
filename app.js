@@ -1,4 +1,4 @@
-const API_BASE = 'https://n8n.northsellermedia.com/webhook/ofb-miniapp';
+const API_BASE = 'https://n8n.northsellermedia.com/webhook/ofb-miniapp-api';
 
 const state = {
   initData: '',
