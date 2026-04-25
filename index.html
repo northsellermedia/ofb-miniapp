@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#071828" />
+  <title>OFB | Около футбола</title>
+  <link rel="preconnect" href="https://n8n.northsellermedia.com" />
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://st.max.ru/js/max-web-app.js"></script>
+</head>
+<body>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+
+  <main class="app-shell">
+    <header class="topbar glass-panel">
+      <div class="brand">
+        <img src="./assets/logo.jpg" alt="OFB" class="brand-logo" />
+        <div>
+          <div class="eyebrow">MAX mini app</div>
+          <h1>Около футбола</h1>
+        </div>
+      </div>
+      <button class="icon-button" id="refreshBtn" aria-label="Обновить">↻</button>
+    </header>
+
+    <section id="notice" class="notice hidden"></section>
+
+    <section class="hero glass-panel">
+      <div>
+        <p class="eyebrow">Твой футбольный центр</p>
+        <h2 id="helloTitle">Загружаем профиль…</h2>
+        <p id="helloText">Подписки, матчи, уведомления и карточки команд в одном месте.</p>
+      </div>
+      <div class="score-chip">
+        <span id="subCount">0</span>
+        <small>команд</small>
+      </div>
+    </section>
+
+    <nav class="segment glass-panel" aria-label="Основные разделы">
+      <button class="segment-btn active" data-screen="home">Мои</button>
+      <button class="segment-btn" data-screen="search">Поиск</button>
+      <button class="segment-btn" data-screen="settings">Настройки</button>
+    </nav>
+
+    <section id="screen-home" class="screen active">
+      <div class="section-head">
+        <h3>Мои команды</h3>
+        <span id="profileStatus" class="muted">—</span>
+      </div>
+      <div id="subscriptions" class="stack"></div>
+    </section>
+
+    <section id="screen-search" class="screen">
+      <div class="search-card glass-panel">
+        <label for="searchInput">Найти команду</label>
+        <div class="search-row">
+          <input id="searchInput" type="search" placeholder="Например: Zenit, CSKA, Real" autocomplete="off" />
+          <button id="clearSearch" class="ghost-button">×</button>
+        </div>
+        <p class="hint">Минимум 2 символа. Поиск идёт по Postgres через n8n, без API-Football.</p>
+      </div>
+      <div id="searchResults" class="stack"></div>
+    </section>
+
+    <section id="screen-settings" class="screen">
+      <div class="glass-panel info-card">
+        <h3>Архитектура MVP</h3>
+        <p>Frontend → n8n webhook API → Postgres. Пользовательские клики не обращаются напрямую в API-Football.</p>
+      </div>
+      <div class="glass-panel info-card">
+        <h3>Тестовый режим</h3>
+        <p id="debugUser">MAX user id определяется через MAX Bridge, query-параметр или fallback в config.js.</p>
+      </div>
+    </section>
+  </main>
+
+  <aside id="teamSheet" class="sheet hidden" aria-hidden="true">
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+    <div class="sheet-card glass-panel">
+      <div class="grabber"></div>
+      <div class="sheet-header">
+        <div class="team-title-wrap">
+          <img id="teamLogo" class="team-logo hidden" alt="" />
+          <div>
+            <p class="eyebrow" id="teamCountry">Команда</p>
+            <h2 id="teamTitle">—</h2>
+            <p id="teamLeague" class="muted">—</p>
+          </div>
+        </div>
+        <button class="icon-button" id="closeSheet" aria-label="Закрыть">×</button>
+      </div>
+
+      <div class="team-actions">
+        <button id="subscribeBtn" class="primary-button">Подписаться</button>
+        <button id="shareBtn" class="secondary-button">Поделиться</button>
+      </div>
+
+      <nav class="tabs" aria-label="Карточка команды">
+        <button class="tab active" data-tab="matches">Матчи</button>
+        <button class="tab" data-tab="profile">Профиль</button>
+        <button class="tab" data-tab="squad">Состав</button>
+        <button class="tab" data-tab="stats">Статистика</button>
+        <button class="tab" data-tab="transfers">Трансферы</button>
+        <button class="tab" data-tab="notify">Уведомления</button>
+      </nav>
+
+      <div id="tabContent" class="tab-content"></div>
+    </div>
+  </aside>
+
+  <template id="emptyTpl">
+    <div class="empty glass-panel">
+      <div class="empty-icon">⚽</div>
+      <h3></h3>
+      <p></p>
+    </div>
+  </template>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
