@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#070A12" />
+  <title>OFB Mini App</title>
+  <script src="https://st.max.ru/js/max-web-app.js"></script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <button class="icon-button back-button is-hidden" id="backButton" aria-label="Назад">
+        <span>‹</span>
+      </button>
+
+      <div class="brand">
+        <div class="brand-logo">OFB</div>
+        <div>
+          <div class="brand-title">Около футбола</div>
+          <div class="brand-subtitle" id="userLine">Футбольный центр</div>
+        </div>
+      </div>
+
+      <div class="status-pill" id="statusPill">Online</div>
+    </header>
+
+    <section class="screen" id="screen-home">
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="eyebrow">OFB Mini App</div>
+          <h1>Футбол рядом. Без лишнего шума.</h1>
+          <p>Выбирай команды, настраивай уведомления и следи за ближайшими матчами в одном удобном интерфейсе.</p>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+        <button class="quick-card" data-nav="teams">
+          <span class="quick-icon">🏟️</span>
+          <span class="quick-title">Мои команды</span>
+          <span class="quick-text" id="quickTeams">Загрузка…</span>
+        </button>
+
+        <button class="quick-card" data-nav="search">
+          <span class="quick-icon">🔎</span>
+          <span class="quick-title">Найти команду</span>
+          <span class="quick-text">Добавить клуб</span>
+        </button>
+
+        <button class="quick-card" data-nav="settings">
+          <span class="quick-icon">🔔</span>
+          <span class="quick-title">Уведомления</span>
+          <span class="quick-text">Персональные настройки</span>
+        </button>
+
+        <button class="quick-card" data-action="refresh">
+          <span class="quick-icon">↻</span>
+          <span class="quick-title">Обновить</span>
+          <span class="quick-text">Синхронизация</span>
+        </button>
+      </div>
+
+      <div class="section-head">
+        <h2>Активные подписки</h2>
+        <button class="text-button" data-nav="teams">Все</button>
+      </div>
+
+      <div id="homeTeams" class="stack"></div>
+    </section>
+
+    <section class="screen is-hidden" id="screen-teams">
+      <div class="section-head">
+        <div>
+          <h2>Мои команды</h2>
+          <p>Команды, по которым ты получаешь уведомления.</p>
+        </div>
+        <button class="small-button" data-nav="search">Добавить</button>
+      </div>
+
+      <div id="teamsList" class="stack"></div>
+    </section>
+
+    <section class="screen is-hidden" id="screen-search">
+      <div class="section-head">
+        <div>
+          <h2>Поиск команды</h2>
+          <p>Поиск идёт только по базе OFB, без запросов в API-Football.</p>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <input id="searchInput" autocomplete="off" placeholder="Например: zenit, spartak, barcelona" />
+        <button class="primary-button" id="searchButton">Найти</button>
+      </div>
+
+      <div id="searchResults" class="stack">
+        <div class="empty-state">
+          <div class="empty-icon">🔎</div>
+          <div class="empty-title">Введите название команды</div>
+          <div class="empty-text">Лучше работает английское написание или короткое название клуба.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen is-hidden" id="screen-team">
+      <div id="teamCardArea"></div>
+    </section>
+
+    <section class="screen is-hidden" id="screen-settings">
+      <div class="section-head">
+        <div>
+          <h2>Настройки</h2>
+          <p>Глобальные настройки приложения. Детальные уведомления — внутри карточки команды.</p>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div>
+          <div class="setting-title">Тихий режим</div>
+          <div class="setting-text">Подключим отдельным backend endpoint после проверки MVP.</div>
+        </div>
+        <button class="switch-button" id="quietSwitch" aria-label="Тихий режим"></button>
+      </div>
+
+      <div class="settings-card">
+        <div>
+          <div class="setting-title">Источник данных</div>
+          <div class="setting-text">Пользовательские действия работают через Postgres cache, без API-Football на кликах.</div>
+        </div>
+        <span class="tag">MVP</span>
+      </div>
+    </section>
+
+    <nav class="tabbar">
+      <button class="tab is-active" data-tab="home">
+        <span>⌂</span>
+        <b>Главная</b>
+      </button>
+      <button class="tab" data-tab="teams">
+        <span>🏟️</span>
+        <b>Команды</b>
+      </button>
+      <button class="tab" data-tab="search">
+        <span>🔎</span>
+        <b>Поиск</b>
+      </button>
+      <button class="tab" data-tab="settings">
+        <span>⚙️</span>
+        <b>Настройки</b>
+      </button>
+    </nav>
+
+    <div class="toast is-hidden" id="toast"></div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
