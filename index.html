@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0B0F17" />
+  <title>OFB Mini App</title>
+  <script src="https://st.max.ru/js/max-web-app.js"></script>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <button class="back is-hidden" id="backButton" aria-label="Назад">‹</button>
+
+      <div class="brand">
+        <div class="logo">OFB</div>
+        <div class="brand-copy">
+          <div class="brand-name">Около футбола</div>
+          <div class="brand-meta" id="userLine">Футбольный центр</div>
+        </div>
+      </div>
+
+      <div class="status" id="statusPill">Online</div>
+    </header>
+
+    <section class="screen" id="screen-home">
+      <div class="hero">
+        <div class="hero-label">OFB Mini App</div>
+        <h1>Твой центр футбольных уведомлений</h1>
+        <p>Команды, матчи и настройки — в одном понятном интерфейсе.</p>
+      </div>
+
+      <div class="menu-grid">
+        <button class="menu-card" data-nav="teams">
+          <span>🏟️</span>
+          <b>Мои команды</b>
+          <em id="quickTeams">Загрузка…</em>
+        </button>
+        <button class="menu-card" data-nav="search">
+          <span>🔎</span>
+          <b>Найти команду</b>
+          <em>Добавить клуб</em>
+        </button>
+        <button class="menu-card" data-nav="settings">
+          <span>🔔</span>
+          <b>Уведомления</b>
+          <em>Настройки</em>
+        </button>
+        <button class="menu-card" id="refreshButton">
+          <span>↻</span>
+          <b>Обновить</b>
+          <em>Синхронизация</em>
+        </button>
+      </div>
+
+      <div class="section-title">
+        <h2>Активные подписки</h2>
+        <button data-nav="teams">Все</button>
+      </div>
+
+      <div class="list" id="homeTeams"></div>
+    </section>
+
+    <section class="screen is-hidden" id="screen-teams">
+      <div class="page-title">
+        <h1>Мои команды</h1>
+        <p>Команды, по которым включены уведомления.</p>
+      </div>
+
+      <div class="list" id="teamsList"></div>
+
+      <button class="primary wide" data-nav="search">Добавить команду</button>
+    </section>
+
+    <section class="screen is-hidden" id="screen-search">
+      <div class="page-title">
+        <h1>Поиск</h1>
+        <p>Поиск работает по базе OFB. API-Football на кликах не используется.</p>
+      </div>
+
+      <div class="search">
+        <input id="searchInput" placeholder="Zenit, Spartak, Barcelona..." autocomplete="off" />
+        <button class="primary" id="searchButton">Найти</button>
+      </div>
+
+      <div class="list" id="searchResults">
+        <div class="empty">
+          <span>🔎</span>
+          <b>Введите название команды</b>
+          <p>Лучше использовать английское написание.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen is-hidden" id="screen-team">
+      <div id="teamArea"></div>
+    </section>
+
+    <section class="screen is-hidden" id="screen-settings">
+      <div class="page-title">
+        <h1>Настройки</h1>
+        <p>Общие настройки приложения. Детальные уведомления находятся в карточке команды.</p>
+      </div>
+
+      <div class="panel">
+        <div>
+          <b>Тихий режим</b>
+          <p>Будет подключён отдельным backend endpoint.</p>
+        </div>
+        <button class="switch" id="quietSwitch" aria-label="Тихий режим"></button>
+      </div>
+
+      <div class="panel">
+        <div>
+          <b>Источник данных</b>
+          <p>Клики пользователя работают через Postgres cache. API-Football используется только фоновыми workflow.</p>
+        </div>
+        <span class="badge">MVP</span>
+      </div>
+    </section>
+
+    <nav class="tabs">
+      <button class="tab is-active" data-tab="home"><span>⌂</span><b>Главная</b></button>
+      <button class="tab" data-tab="teams"><span>🏟️</span><b>Команды</b></button>
+      <button class="tab" data-tab="search"><span>🔎</span><b>Поиск</b></button>
+      <button class="tab" data-tab="settings"><span>⚙️</span><b>Настройки</b></button>
+    </nav>
+
+    <div class="toast is-hidden" id="toast"></div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
