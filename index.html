@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6fbff" />
+  <title>OFB | Около футбола</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+    <div class="bg-orb orb-three"></div>
+
+    <header class="topbar glass-panel">
+      <div class="brand">
+        <img src="assets/logo-ofb.jpg" alt="OFB" class="brand-logo" />
+        <div>
+          <div class="brand-title">OFB</div>
+          <div class="brand-subtitle">Около футбола</div>
+        </div>
+      </div>
+      <button id="refreshBtn" class="icon-btn" type="button" aria-label="Обновить">↻</button>
+    </header>
+
+    <main>
+      <section id="loadingView" class="screen screen-active">
+        <div class="hero glass-panel loading-card">
+          <img src="assets/logo-ofb.jpg" alt="OFB" class="hero-logo pulse" />
+          <h1>Загружаем OFB</h1>
+          <p>Подключаем профиль, подписки и футбольные данные</p>
+        </div>
+      </section>
+
+      <section id="homeView" class="screen">
+        <div class="hero glass-panel">
+          <div class="hero-top">
+            <img src="assets/logo-ofb.jpg" alt="OFB" class="hero-logo" />
+            <div class="status-pill">MAX mini app</div>
+          </div>
+          <h1>Футбол без лишнего шума</h1>
+          <p id="welcomeText">Выбирай команды, смотри матчи, составы, трансферы и получай важные уведомления.</p>
+          <div class="hero-stats">
+            <div>
+              <strong id="subsCount">0</strong>
+              <span>команд</span>
+            </div>
+            <div>
+              <strong id="planText">free</strong>
+              <span>тариф</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <h2>Мои команды</h2>
+          <button id="goSearchBtn" class="soft-btn" type="button">Найти</button>
+        </div>
+        <div id="subscriptionsList" class="cards-list"></div>
+      </section>
+
+      <section id="searchView" class="screen">
+        <div class="nav-row">
+          <button class="back-btn" data-back="home" type="button">← Назад</button>
+        </div>
+
+        <div class="glass-panel search-card">
+          <h1>Найти команду</h1>
+          <p>Введите минимум 2 символа. Поиск идёт через backend и Postgres.</p>
+          <div class="search-box">
+            <input id="searchInput" type="search" placeholder="Например: Zenit, Barcelona" autocomplete="off" />
+          </div>
+        </div>
+
+        <div id="searchStatus" class="muted-text"></div>
+        <div id="searchResults" class="cards-list"></div>
+      </section>
+
+      <section id="teamView" class="screen">
+        <div class="nav-row">
+          <button class="back-btn" data-back="home" type="button">← Назад</button>
+        </div>
+        <div id="teamCard"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav glass-panel">
+      <button id="tabHome" class="tab active" type="button">Главная</button>
+      <button id="tabSearch" class="tab" type="button">Поиск</button>
+    </nav>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
