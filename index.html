@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#090A10" />
+  <title>OFB | Около футбола</title>
+  <link rel="preconnect" href="https://n8n.northsellermedia.com" />
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://st.max.ru/js/max-web-app.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="bg-orb bg-orb-one"></div>
+    <div class="bg-orb bg-orb-two"></div>
+    <div class="bg-grid"></div>
+
+    <header class="topbar safe-top">
+      <button class="icon-button ghost" id="refreshButton" type="button" aria-label="Обновить">
+        <span>↻</span>
+      </button>
+
+      <div class="brand">
+        <div class="brand-mark">OFB</div>
+        <div>
+          <div class="brand-title">Около футбола</div>
+          <div class="brand-subtitle">Футбольный центр</div>
+        </div>
+      </div>
+
+      <div class="status-pill" id="connectionStatus">
+        <span class="status-dot"></span>
+        Online
+      </div>
+    </header>
+
+    <main class="content" id="app">
+      <section class="hero-card glass-card skeleton-block">
+        <div class="skeleton-line big"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav safe-bottom" aria-label="Навигация">
+      <button class="nav-item active" data-view="home" type="button">
+        <span class="nav-icon">⌂</span>
+        <span>Главная</span>
+      </button>
+      <button class="nav-item" data-view="teams" type="button">
+        <span class="nav-icon">★</span>
+        <span>Команды</span>
+      </button>
+      <button class="nav-item" data-view="search" type="button">
+        <span class="nav-icon">⌕</span>
+        <span>Поиск</span>
+      </button>
+      <button class="nav-item" data-view="settings" type="button">
+        <span class="nav-icon">⚙</span>
+        <span>Настройки</span>
+      </button>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+</body>
+</html>
