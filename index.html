@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#eef6fc" />
+  <title>OFB | Около футбола</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <div class="ambient ambient-c"></div>
+
+    <header class="topbar glass">
+      <div class="brand">
+        <img src="assets/logo-ofb.jpg" alt="OFB" class="brand-logo" />
+        <div>
+          <div class="brand-title">OFB</div>
+          <div class="brand-subtitle">Около футбола</div>
+        </div>
+      </div>
+
+      <button id="refreshBtn" class="icon-btn" type="button" aria-label="Обновить">
+        <span>↻</span>
+      </button>
+    </header>
+
+    <main>
+      <section id="loadingView" class="screen screen-active">
+        <div class="hero glass loading-hero">
+          <img src="assets/logo-ofb.jpg" alt="OFB" class="hero-logo pulse" />
+          <div class="pill small-pill">MAX mini app</div>
+          <h1>Загружаем OFB</h1>
+          <p>Подключаем профиль, подписки и карточки команд.</p>
+        </div>
+      </section>
+
+      <section id="homeView" class="screen">
+        <div class="hero glass">
+          <div class="hero-top">
+            <img src="assets/logo-ofb.jpg" alt="OFB" class="hero-logo" />
+            <div class="pill">MAX mini app</div>
+          </div>
+
+          <h1>Футбол без лишнего шума</h1>
+          <p id="welcomeText">Около футбола | OFB, выбирай команды и настраивай только нужные уведомления.</p>
+
+          <div class="hero-stats">
+            <div class="stat-box">
+              <strong id="subsCount">0</strong>
+              <span>команд</span>
+            </div>
+            <div class="stat-box">
+              <strong id="planText">free</strong>
+              <span>тариф</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <h2>Мои команды</h2>
+          <button id="goSearchBtn" class="soft-btn" type="button">Найти</button>
+        </div>
+
+        <div id="subscriptionsList" class="stack"></div>
+      </section>
+
+      <section id="searchView" class="screen">
+        <div class="nav-row">
+          <button class="ghost-btn" data-back="home" type="button">← Назад</button>
+        </div>
+
+        <div class="search-block glass">
+          <h1>Найти команду</h1>
+          <p>Введите минимум 2 символа. Поиск идёт через n8n backend.</p>
+          <label class="search-field">
+            <input id="searchInput" type="search" placeholder="Например: Zenit, Barcelona, Milan" autocomplete="off" />
+          </label>
+        </div>
+
+        <div id="searchStatus" class="helper-text"></div>
+        <div id="searchResults" class="stack"></div>
+      </section>
+
+      <section id="teamView" class="screen">
+        <div class="nav-row">
+          <button class="ghost-btn" data-back="home" type="button">← Назад</button>
+        </div>
+
+        <div id="teamScreen"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav glass">
+      <button id="tabHome" class="bottom-tab active" type="button">Главная</button>
+      <button id="tabSearch" class="bottom-tab" type="button">Поиск</button>
+    </nav>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
