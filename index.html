@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#071a2d" />
+  <title>OFB | Около футбола</title>
+  <link rel="preconnect" href="https://n8n.northsellermedia.com" crossorigin>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://st.max.ru/js/max-web-app.js"></script>
+</head>
+<body>
+  <div id="app" class="app">
+    <header class="topbar liquid-top">
+      <button id="homeBrand" class="brand brand-button" type="button" aria-label="На главную">
+        <img src="./assets/logo.jpg" alt="OFB" class="brand-logo" />
+        <span>
+          <span class="brand-title">OFB</span>
+          <span class="brand-subtitle">Около футбола</span>
+        </span>
+      </button>
+      <button id="refreshBtn" class="icon-btn" type="button" aria-label="Обновить">↻</button>
+    </header>
+
+    <main id="view" class="view">
+      <section class="hero-card skeleton">
+        <div class="skeleton-line w60"></div>
+        <div class="skeleton-line w90"></div>
+        <div class="skeleton-line w45"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
