@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#061b2c" />
+  <meta name="color-scheme" content="dark" />
+  <title>OFB | Около футбола</title>
+  <link rel="preconnect" href="https://st.max.ru" />
+  <link rel="preconnect" href="https://n8n.northsellermedia.com" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://st.max.ru/js/max-web-app.js"></script>
+  <script src="./config.js"></script>
+</head>
+<body>
+  <div class="bg-orb bg-orb-a"></div>
+  <div class="bg-orb bg-orb-b"></div>
+  <div class="app-shell">
+    <header class="topbar safe-top">
+      <button class="brand" id="brandButton" type="button" aria-label="Открыть канал OFB">
+        <img src="./assets/logo-ofb.jpg" alt="OFB" class="brand-logo" />
+        <span class="brand-copy">
+          <strong>OFB</strong>
+          <small>Около футбола</small>
+        </span>
+      </button>
+      <div class="top-actions">
+        <span class="status-pill" id="connectionStatus">MAX</span>
+      </div>
+    </header>
+
+    <main class="content" id="appRoot">
+      <section class="hero glass-card">
+        <div>
+          <p class="eyebrow">Мини-приложение</p>
+          <h1>Твоя команда — в одном экране</h1>
+          <p class="hero-text">Матчи, состав, трансферы и уведомления без лишних кнопок.</p>
+        </div>
+        <div class="hero-ball" aria-hidden="true"></div>
+      </section>
+
+      <section class="search-card glass-card">
+        <label class="search-label" for="teamSearch">Найти команду</label>
+        <div class="search-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 21-4.35-4.35M10.6 18.2a7.6 7.6 0 1 1 0-15.2 7.6 7.6 0 0 1 0 15.2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="teamSearch" type="search" autocomplete="off" inputmode="search" placeholder="Например: Zenit, Arsenal, Milan" />
+        </div>
+        <div class="result-list" id="searchResults"></div>
+      </section>
+
+      <section class="profile-grid" id="profileGrid"></section>
+
+      <section class="team-panel hidden" id="teamPanel">
+        <article class="team-card glass-card" id="teamHeader"></article>
+        <nav class="tabbar glass-card" aria-label="Разделы команды">
+          <button class="tab active" type="button" data-tab="overview">Обзор</button>
+          <button class="tab" type="button" data-tab="fixtures">Матчи</button>
+          <button class="tab" type="button" data-tab="squad">Состав</button>
+          <button class="tab" type="button" data-tab="transfers">Трансферы</button>
+        </nav>
+        <section class="tab-content" id="tabContent"></section>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+  <template id="skeletonTemplate"><div class="skeleton-line"></div></template>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
