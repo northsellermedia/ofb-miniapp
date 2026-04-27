@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+<rect width="256" height="256" rx="56" fill="#071f35"/>
+<circle cx="128" cy="128" r="84" fill="#66a6c9"/>
+<circle cx="128" cy="128" r="52" fill="#fff"/>
+<text x="128" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" font-weight="900" fill="#071f35">OFB</text>
+</svg>
