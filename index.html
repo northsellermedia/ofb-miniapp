@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OFB 3X Debug Tester</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif; margin: 0; padding: 16px; background:#0f1117; color:#fff; }
+    .card { background:#181b24; border:1px solid #2c3140; border-radius:16px; padding:16px; margin-bottom:14px; }
+    button { width:100%; padding:14px; margin:6px 0; border:0; border-radius:12px; font-weight:700; background:#2f6bff; color:#fff; font-size:16px; }
+    button.secondary { background:#2a2f3c; }
+    pre { white-space:pre-wrap; word-break:break-word; background:#080a0f; padding:12px; border-radius:12px; max-height:280px; overflow:auto; font-size:12px; }
+    .bad { color:#ff7b7b; }
+    .ok { color:#7bffb0; }
+    input { width:100%; box-sizing:border-box; padding:12px; border-radius:10px; border:1px solid #3a4052; background:#0b0d13; color:white; margin:6px 0; }
+    .small { opacity:.75; font-size:13px; line-height:1.35; }
+  </style>
+</head>
+<body>
+  <h2>OFB 3X Debug Tester</h2>
+
+  <div class="card">
+    <div class="small">1) Открой эту страницу именно внутри MAX mini app. 2) Нажми «Проверить initData». 3) Потом «Тест search_team».</div>
+  </div>
+
+  <div class="card">
+    <button onclick="checkInitData()">Проверить initData</button>
+    <button class="secondary" onclick="copyInitData()">Скопировать initData</button>
+    <div id="status" class="small"></div>
+    <pre id="initOut">initData пока не проверялся</pre>
+  </div>
+
+  <div class="card">
+    <input id="q" value="barcelona" placeholder="Команда для поиска">
+    <button onclick="callAction('open_app', {})">Тест open_app</button>
+    <button onclick="callAction('search_team', {q: document.getElementById('q').value})">Тест search_team</button>
+    <button onclick="callAction('select_team', {team_id:529, team_name:'Barcelona'})">Тест select_team Barcelona</button>
+    <pre id="apiOut">Ответ API будет здесь</pre>
+  </div>
+
+<script>
+const API_URL = 'https://n8n.northsellermedia.com/webhook/ofb-mini-app-action';
+
+function getInitData() {
+  try {
+    if (window.WebApp && window.WebApp.initData) return window.WebApp.initData;
+  } catch(e) {}
+
+  try {
+    const hash = window.location.hash || '';
+    const cleanHash = hash.replace(/^#/, '');
+    const params = new URLSearchParams(cleanHash);
+    const webAppData = params.get('WebAppData') || params.get('webAppData') || params.get('initData');
+    if (webAppData) return webAppData;
+  } catch(e) {}
+
+  try {
+    const search = window.location.search || '';
+    const params = new URLSearchParams(search);
+    const webAppData = params.get('WebAppData') || params.get('webAppData') || params.get('initData');
+    if (webAppData) return webAppData;
+  } catch(e) {}
+
+  return '';
+}
+
+function checkInitData() {
+  const data = getInitData();
+  const status = document.getElementById('status');
+  const out = document.getElementById('initOut');
+
+  if (!data) {
+    status.innerHTML = '<span class="bad">initData НЕ найден. Страница открыта не внутри MAX или MAX не передал данные.</span>';
+    out.textContent = 'NO INIT DATA';
+    return;
+  }
+
+  status.innerHTML = '<span class="ok">initData найден. Длина: ' + data.length + '</span>';
+  out.textContent = data;
+}
+
+async function copyInitData() {
+  const data = getInitData();
+  if (!data) {
+    alert('initData не найден');
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(data);
+    alert('initData скопирован');
+  } catch(e) {
+    alert('Не удалось скопировать автоматически. Выдели текст вручную.');
+  }
+}
+
+async function callAction(action, payload) {
+  const out = document.getElementById('apiOut');
+  const initData = getInitData();
+
+  if (!initData) {
+    out.textContent = 'NO INIT DATA. Открой страницу внутри MAX mini app.';
+    return;
+  }
+
+  out.textContent = 'Запрос...';
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({initData, action, payload})
+    });
+
+    const text = await res.text();
+    let pretty = text;
+    try { pretty = JSON.stringify(JSON.parse(text), null, 2); } catch(e) {}
+
+    out.textContent = 'HTTP ' + res.status + '\n\n' + pretty;
+  } catch(e) {
+    out.textContent = 'FETCH ERROR:\n' + String(e && e.message ? e.message : e);
+  }
+}
+
+checkInitData();
+</script>
+</body>
+</html>
