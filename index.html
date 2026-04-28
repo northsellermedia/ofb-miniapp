@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#071f35" />
+  <title>OFB | Около футбола</title>
+  <link rel="icon" href="./assets/ofb-logo.jpg" />
+  <link rel="apple-touch-icon" href="./assets/ofb-logo.jpg" />
+  <link rel="stylesheet" href="./styles.css?v=12.0" />
+  <script src="https://st.max.ru/js/max-web-app.js?v=12.0"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <img class="brand-logo" src="./assets/ofb-logo.jpg" alt="OFB" />
+        <div>
+          <div class="brand-title">OFB</div>
+          <div class="brand-subtitle">Около футбола</div>
+        </div>
+      </div>
+
+      <button class="icon-button" id="refreshBtn" type="button" aria-label="Обновить">
+        ↻
+      </button>
+    </header>
+
+    <main>
+
+      <section id="debugPanel" class="card debug-panel hidden">
+        <div class="card-head">
+          <h2>Диагностика</h2>
+          <span class="pill">debug</span>
+        </div>
+        <pre id="debugOutput">Загрузка диагностики...</pre>
+      </section>
+
+      <section id="authNotice" class="notice hidden">
+        Открой mini app внутри MAX. Для безопасности приложение работает только через проверенный <b>initData</b>.
+      </section>
+
+      <section id="loadingState" class="hero-card">
+        <div class="loader"></div>
+        <h1>Загружаем OFB</h1>
+        <p>Проверяем вход и подгружаем данные команды.</p>
+      </section>
+
+      <section id="emptyState" class="hero-card hidden">
+        <div class="ball-icon">⚽</div>
+        <h1>Выбери команду</h1>
+        <p>После выбора команды здесь появятся ближайшие матчи, состав, статистика и трансферы.</p>
+        <button class="primary-button" id="openSearchBtn" type="button">Выбрать команду</button>
+      </section>
+
+      <section id="teamState" class="hidden">
+        <article class="team-hero">
+          <div class="team-hero-main">
+            <img id="teamLogo" class="team-logo hidden" alt="" />
+            <div>
+              <p class="eyebrow">Моя команда</p>
+              <h1 id="teamName">Команда</h1>
+              <p id="teamLeague" class="team-league">Лига не выбрана</p>
+              <p id="teamMeta" class="muted">Данные из кэша OFB</p>
+            </div>
+          </div>
+          <button class="ghost-button" id="replaceTeamBtn" type="button">Заменить команду</button>
+        </article>
+
+        <nav class="tabs" aria-label="Разделы">
+          <button class="tab active" data-tab="overview" type="button">Главная</button>
+          <button class="tab" data-tab="matches" type="button">Матчи</button>
+          <button class="tab" data-tab="season" type="button">Сезон</button>
+          <button class="tab" data-tab="squad" type="button">Состав</button>
+          <button class="tab" data-tab="transfers" type="button">Трансферы</button>
+          <button class="tab" data-tab="notifications" type="button">Уведомления</button>
+        </nav>
+
+        <section class="tab-page active" id="tab-overview">
+          <div class="grid two">
+            <article class="card">
+              <div class="card-head">
+                <h2>Команда</h2>
+              </div>
+              <div class="mini-team-summary">
+                <div>
+                  <div class="summary-label">Выбрана</div>
+                  <div class="summary-value" id="summaryTeamName">—</div>
+                </div>
+                <div>
+                  <div class="summary-label">Лига</div>
+                  <div class="summary-value" id="summaryLeagueName">—</div>
+                </div>
+              </div>
+              <button class="ghost-button full-width" id="overviewReplaceTeamBtn" type="button">Заменить команду</button>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <h2>Быстрый обзор</h2>
+              </div>
+              <div class="mini-team-summary">
+                <div>
+                  <div class="summary-label">Матчи</div>
+                  <div class="summary-value" id="overviewFixturesCount">—</div>
+                </div>
+                <div>
+                  <div class="summary-label">Состав</div>
+                  <div class="summary-value" id="overviewSquadCount">—</div>
+                </div>
+                <div>
+                  <div class="summary-label">Трансферы</div>
+                  <div class="summary-value" id="overviewTransfersCount">—</div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <article class="card">
+            <div class="card-head">
+              <h2>Ближайшие матчи</h2>
+              <button class="text-button" data-tab-jump="matches" type="button">Все</button>
+            </div>
+            <div id="nextMatches" class="list"></div>
+          </article>
+        </section>
+
+        <section class="tab-page" id="tab-matches">
+          <article class="card">
+            <div class="card-head">
+              <h2>Матчи</h2>
+              <span class="pill" id="matchesCount">0</span>
+            </div>
+            <div id="matchesList" class="list"></div>
+          </article>
+        </section>
+
+        <section class="tab-page" id="tab-season">
+          <article class="card">
+            <div class="card-head">
+              <h2>Сезон</h2>
+              <span class="pill" id="seasonLeague">—</span>
+            </div>
+
+            <div class="season-hero">
+              <div>
+                <div class="summary-label">Сезон</div>
+                <div class="season-title" id="seasonTitle">—</div>
+              </div>
+              <div class="season-form" id="seasonForm">—</div>
+            </div>
+
+            <div class="stat-grid season-grid">
+              <div><b id="seasonPlayed">—</b><span>Матчи</span></div>
+              <div><b id="seasonWins">—</b><span>Победы</span></div>
+              <div><b id="seasonDraws">—</b><span>Ничьи</span></div>
+              <div><b id="seasonLosses">—</b><span>Поражения</span></div>
+              <div><b id="seasonGF">—</b><span>Забито</span></div>
+              <div><b id="seasonGA">—</b><span>Пропущено</span></div>
+              <div><b id="seasonCleanSheets">—</b><span>Сухие</span></div>
+              <div><b id="seasonFailedToScore">—</b><span>Без голов</span></div>
+            </div>
+
+            <p id="seasonEmpty" class="small-muted hidden">Статистика сезона пока не найдена в кэше.</p>
+          </article>
+        </section>
+
+        <section class="tab-page" id="tab-notifications">
+          <article class="card">
+            <div class="card-head">
+              <h2>Уведомления</h2>
+              <span class="pill">MAX</span>
+            </div>
+            <div class="toggles">
+              <label class="toggle-row">
+                <span><b>Голы</b><small>уведомлять о голах в матче</small></span>
+                <input type="checkbox" data-flag="goals" />
+              </label>
+              <label class="toggle-row">
+                <span><b>Финальный свисток</b><small>результат после окончания</small></span>
+                <input type="checkbox" data-flag="final" />
+              </label>
+              <label class="toggle-row">
+                <span><b>Напоминание за час</b><small>перед началом матча</small></span>
+                <input type="checkbox" data-flag="reminder" />
+              </label>
+              <label class="toggle-row">
+                <span><b>Новости команды</b><small>важные новости по выбранной команде</small></span>
+                <input type="checkbox" data-flag="news" />
+              </label>
+            </div>
+            <p class="small-muted">Настройки сохраняются сразу и применяются к выбранной команде.</p>
+            <button class="ghost-button full-width" id="clearAppCacheBtn" type="button">Сбросить кэш приложения</button>
+          </article>
+        </section>
+
+        <section class="tab-page" id="tab-squad">
+          <article class="card">
+            <div class="card-head">
+              <h2>Состав команды</h2>
+              <span class="pill" id="squadCount">0</span>
+            </div>
+            <div id="squadGrid" class="players-grid"></div>
+          </article>
+        </section>
+
+        <section class="tab-page" id="tab-transfers">
+          <article class="card">
+            <div class="card-head">
+              <h2>Трансферы</h2>
+              <span class="pill" id="transfersCount">0</span>
+            </div>
+            <div id="transfersList" class="list"></div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div class="sheet hidden" id="searchSheet" role="dialog" aria-modal="true">
+    <div class="sheet-backdrop" id="closeSearchBackdrop"></div>
+    <div class="sheet-panel">
+      <div class="card-head">
+        <h2>Выбрать команду</h2>
+        <button class="icon-button" id="closeSearchBtn" type="button">×</button>
+      </div>
+
+      <div class="search-box">
+        <input id="teamSearchInput" type="search" placeholder="Например: Zenit, Barcelona, Arsenal" autocomplete="off" />
+        <button id="teamSearchBtn" class="primary-button compact" type="button">Найти</button>
+      </div>
+
+      <div id="searchHint" class="small-muted">Введите минимум 3 символа.</div>
+      <div id="searchResults" class="list search-results"></div>
+      <div id="teamCardBox" class="team-card-box hidden"></div>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="./config.js?v=12.0"></script>
+  <script src="./app.js?v=12.0"></script>
+</body>
+</html>
